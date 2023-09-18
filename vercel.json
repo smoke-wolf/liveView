@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/serverless": {
+      "handler": "serverless.js"
+    }
+  }
+}
