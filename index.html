@@ -11,7 +11,7 @@
 
     <script>
         const onlineUsersElement = document.getElementById("online-users");
-        const socket = new WebSocket('serverless');
+        const socket = new WebSocket('/api/serverless');
 
         socket.addEventListener('message', (event) => {
             onlineUsersElement.textContent = event.data;
