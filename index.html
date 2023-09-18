@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Users Counter</title>
+</head>
+<body>
+    <h1>Online Users</h1>
+    <p>Currently, there are <span id="online-users">0</span> people viewing this page.</p>
+
+    <script>
+        const onlineUsersElement = document.getElementById("online-users");
+        const socket = new WebSocket('ws://localhost:3000');
+
+        socket.addEventListener('message', (event) => {
+            onlineUsersElement.textContent = event.data;
+        });
+    </script>
+</body>
+</html>
