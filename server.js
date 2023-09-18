@@ -1,12 +1,15 @@
-const express = require('express');
+const { Server } = require('ws');
+const WebSocketServer = Server;
 const http = require('http');
-const WebSocket = require('ws');
-
-const app = express();
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
 
 let onlineUsers = 0;
+
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end('WebSocket server running on Vercel\n');
+});
+
+const wss = new WebSocketServer({ server });
 
 wss.on('connection', (ws) => {
     onlineUsers++;
@@ -20,16 +23,10 @@ wss.on('connection', (ws) => {
 
 function updateOnlineUsers() {
     wss.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
+        if (client.readyState === WebSocketServer.OPEN) {
             client.send(onlineUsers.toString());
         }
     });
 }
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
-
-server.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
-});
+module.exports = server;
